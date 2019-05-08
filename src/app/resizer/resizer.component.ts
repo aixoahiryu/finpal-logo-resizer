@@ -9,6 +9,7 @@ export class ResizerComponent implements OnInit {
 	ngOnInit() {}
   logoFileImage: File;
   companyResource: CompanyResource = new CompanyResource();
+  imgBase64:any;
 
 handleUploadImage(input) {
         let fr = new FileReader();
@@ -16,6 +17,7 @@ handleUploadImage(input) {
         fr.onload = (e: any) => {
             this.updateCompanyLogo(this.resizeBase64(fr.result, 200, 50));
             //this.updateCompanyLogo(fr.result);
+            this.imgBase64 = fr.result;
             
             console.log(this.companyResource.companyLogoPath);
             console.log(input.target.files);

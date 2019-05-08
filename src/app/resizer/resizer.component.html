@@ -11,3 +11,7 @@
     <input type="file" id="uploadFromFile" name="pic" accept="image/*" class="sr-only"
         (change)="handleUploadImage($event)">
 </div>
+<br>
+Original:
+<img id="logoImage" [src]="imgBase64" class="img-thumbnail padding-20"
+        alt="Company Logo" />
