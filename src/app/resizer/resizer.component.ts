@@ -14,7 +14,7 @@ handleUploadImage(input) {
         let fr = new FileReader();
         fr.readAsDataURL(input.target.files[0]);
         fr.onload = (e: any) => {
-            this.updateCompanyLogo(fr.result);
+            this.updateCompanyLogo(this.resizeBase64(fr.result, 200, 50));
             
             console.log(this.companyResource.companyLogoPath);
             console.log(input.target.files);
@@ -51,6 +51,46 @@ handleUploadImage(input) {
         
         this.updateCompanyLogo(this.logoFileImage);
   }
+
+  resizeBase64(base64, maxWidth, maxHeight){
+
+
+  // Max size for thumbnail
+  if(typeof(maxWidth) === 'undefined')  maxWidth = 500;
+  if(typeof(maxHeight) === 'undefined')  maxHeight = 500;
+
+  // Create and initialize two canvas
+  var canvas = document.createElement("canvas");
+  var ctx = canvas.getContext("2d");
+  var canvasCopy = document.createElement("canvas");
+  var copyContext = canvasCopy.getContext("2d");
+
+  // Create original image
+  var img = new Image();
+  img.src = base64;
+
+  // Determine new ratio based on max size
+  var ratio = 1;
+  if(img.width > maxWidth)
+    ratio = maxWidth / img.width;
+  else if(img.height > maxHeight)
+    ratio = maxHeight / img.height;
+
+  // Draw original image in second canvas
+  canvasCopy.width = img.width;
+  canvasCopy.height = img.height;
+  copyContext.drawImage(img, 0, 0);
+
+  // Copy and resize second canvas to first canvas
+  canvas.width = img.width * ratio;
+  canvas.height = img.height * ratio;
+  ctx.drawImage(canvasCopy, 0, 0, canvasCopy.width, canvasCopy.height, 0, 0, canvas.width, canvas.height);
+
+  return canvas.toDataURL();
+
+
+
+ }
 
   //===========================================================================
 
