@@ -19,8 +19,9 @@ handleUploadImage(input) {
             //this.updateCompanyLogo(fr.result);
             this.originalBase64 = fr.result;
             
+            console.log(this.originalBase64);
             console.log(this.companyResource.companyLogoPath);
-            console.log(input.target.files);
+            
             // Crop image section
             //===============================================================================================
             // let image = new Image();
