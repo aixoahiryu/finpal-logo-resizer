@@ -75,10 +75,10 @@ handleUploadImage(input) {
 
   // Determine new ratio based on max size
   var ratio = 1;
-  if(img.width > maxWidth)
-    ratio = maxWidth / img.width;
-  else if(img.height > maxHeight)
+  if(img.height > maxHeight)
     ratio = maxHeight / img.height;
+  else if(img.width > maxWidth)
+    ratio = maxWidth / img.width;
 
   // Draw original image in second canvas
   canvasCopy.width = img.width;
