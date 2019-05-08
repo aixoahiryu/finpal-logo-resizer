@@ -15,6 +15,7 @@ handleUploadImage(input) {
         fr.readAsDataURL(input.target.files[0]);
         fr.onload = (e: any) => {
             this.updateCompanyLogo(this.resizeBase64(fr.result, 200, 50));
+            //this.updateCompanyLogo(fr.result);
             
             console.log(this.companyResource.companyLogoPath);
             console.log(input.target.files);
