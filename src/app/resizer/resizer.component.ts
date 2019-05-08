@@ -14,8 +14,9 @@ export class ResizerComponent implements OnInit {
     let fr = new FileReader();
     fr.readAsDataURL(input.target.files[0]);
     fr.onload = (e: any) => {
-      this.updateCompanyLogo(this.resizeBase64(fr.result, 200, 50));
+      this.updateCompanyLogo(this.resizeBase64(fr.result));
       console.log(input.target.files[0]);
+      console.log(this.companyResource.companyLogoPath);
       // Crop image section
       //===============================================================================================
       // let image = new Image();
@@ -50,12 +51,11 @@ export class ResizerComponent implements OnInit {
         this.updateCompanyLogo(this.logoFileImage);
   }*/
 
-  resizeBase64(base64, maxWidth, maxHeight) {
+  resizeBase64(base64) {
 
 
     // Max size for thumbnail
-    if (typeof (maxWidth) === 'undefined') maxWidth = 500;
-    if (typeof (maxHeight) === 'undefined') maxHeight = 500;
+    const maxHeight = 50;
 
     // Create and initialize two canvas
     var canvas = document.createElement("canvas");
@@ -65,18 +65,12 @@ export class ResizerComponent implements OnInit {
 
     // Create original image
     var img = new Image();
-    img.onload = function(){
-      
-      
-    };
     img.src = base64;
 
     // Determine new ratio based on max size
     var ratio = 1;
       if (img.height > maxHeight)
         ratio = maxHeight / img.height;
-      else if (img.width > maxWidth)
-        ratio = maxWidth / img.width;
 
       // Copy and resize second canvas to first canvas
       canvas.width = img.width * ratio;
