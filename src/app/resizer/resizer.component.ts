@@ -7,12 +7,15 @@ import { Component, OnInit, Input, EventEmitter, Output } from "@angular/core";
 })
 export class ResizerComponent implements OnInit {
 	ngOnInit() {}
+  logoFileImage: File;
+  companyResource: CompanyResource = new CompanyResource();
 
 handleUploadImage(input) {
         let fr = new FileReader();
         fr.readAsDataURL(input.target.files[0]);
         fr.onload = (e: any) => {
-            //this.updateCompanyLogo(input.target.files[0]);
+            this.updateCompanyLogo(input.target.files[0]);
+            
 
             // Crop image section
             //===============================================================================================
@@ -40,4 +43,57 @@ handleUploadImage(input) {
         }
 
     }
+  
+  handleFinalImage(base64: any) {
+        $("#logoImage").attr('src', base64);
+        this.logoFileImage = this.convertBase64ToFile(base64, this.createRandomString());
+        
+        this.updateCompanyLogo(this.logoFileImage);
+  }
+
+  //===========================================================================
+
+  private updateCompanyLogo(input)
+  {
+    this.companyResource.companyLogoPath = input;
+  }
+
+  private dataURItoBlob(dataURI) {
+    var binary = atob(dataURI.split(',')[1]);
+    var array = [];
+    for (var i = 0; i < binary.length; i++) {
+      array.push(binary.charCodeAt(i));
+    }
+    return new Blob([new Uint8Array(array)], {
+      type: 'image/jpg'
+    });
+  }
+
+  convertBase64ToFile(base64: any, fileName: string, option?: any): any {
+    if (base64) {
+      let tempBlob: Blob = this.dataURItoBlob(base64);
+      // let listBlob: any[] = [tempBlob];
+      // let file = new File(listBlob, fileName, option);
+
+      return tempBlob;
+    } else
+      return null;
+  }
+}
+
+class CompanyResource {
+    id: string;
+    crmurl: string;
+    addressLine1: string;
+    addressLine2: string;
+    city: string;
+    stateOrProvince: string;
+    postalCode: string;
+    phone: string;
+    email: string;
+    companyLogoPath: string;
+    //socialMedias: SocialMedias[];
+    registerName: string;
+    registerNumber: number;
+    licenseNumber: number;
 }
