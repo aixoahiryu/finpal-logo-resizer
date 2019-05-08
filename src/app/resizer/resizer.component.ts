@@ -9,20 +9,12 @@ export class ResizerComponent implements OnInit {
   ngOnInit() { }
   logoFileImage: File;
   companyResource: CompanyResource = new CompanyResource();
-  originalBase64: any;
-  resizedBase64: any;
 
   handleUploadImage(input) {
     let fr = new FileReader();
     fr.readAsDataURL(input.target.files[0]);
     fr.onload = (e: any) => {
-      console.log("File", e);
-      
       this.updateCompanyLogo(this.resizeBase64(fr.result, 200, 50));
-      this.originalBase64 = fr.result;
-
-      console.log(this.originalBase64);
-      console.log(this.companyResource.companyLogoPath);
 
       // Crop image section
       //===============================================================================================
@@ -70,7 +62,6 @@ export class ResizerComponent implements OnInit {
     var ctx = canvas.getContext("2d");
     var canvasCopy = document.createElement("canvas");
     var copyContext = canvasCopy.getContext("2d");
-    var imgData: string;
 
     // Create original image
     var img = new Image();
@@ -92,7 +83,6 @@ export class ResizerComponent implements OnInit {
       canvas.height = img.height * ratio;
       ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0, canvas.width, canvas.height);
 
-      imgData = canvas.toDataURL();
       return canvas.toDataURL();
   }
 
