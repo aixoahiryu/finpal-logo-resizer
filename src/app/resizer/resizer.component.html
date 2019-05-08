@@ -6,12 +6,14 @@
     <img id="logoImage" [src]="companyResource.companyLogoPath" class="img-thumbnail padding-20"
         alt="Company Logo" />
     <label for="uploadFromFile">
-        <span class="btn btn-default btn-sm margin-top-10">New company logo</span>
+        <span class="btn btn-default btn-sm margin-top-10">&lt;--- Resized logo</span>
     </label>
     <input type="file" id="uploadFromFile" name="pic" accept="image/*" class="sr-only"
         (change)="handleUploadImage($event)">
 </div>
 <br>
+<br>
+<hr>
 Original:
 <img id="logoImage" [src]="imgBase64" class="img-thumbnail padding-20"
         alt="Company Logo" />
