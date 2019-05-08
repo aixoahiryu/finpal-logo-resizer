@@ -14,9 +14,10 @@ handleUploadImage(input) {
         let fr = new FileReader();
         fr.readAsDataURL(input.target.files[0]);
         fr.onload = (e: any) => {
-            this.updateCompanyLogo(input.target.files[0]);
+            this.updateCompanyLogo(fr.result);
             
-
+            console.log(this.companyResource.companyLogoPath);
+            console.log(input.target.files);
             // Crop image section
             //===============================================================================================
             // let image = new Image();
