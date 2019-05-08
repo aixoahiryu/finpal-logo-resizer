@@ -15,7 +15,7 @@ export class ResizerComponent implements OnInit {
     fr.readAsDataURL(input.target.files[0]);
     fr.onload = (e: any) => {
       this.updateCompanyLogo(this.resizeBase64(fr.result, 200, 50));
-
+      console.log(input.target.files[0]);
       // Crop image section
       //===============================================================================================
       // let image = new Image();
