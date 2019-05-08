@@ -17,7 +17,6 @@ export class ResizerComponent implements OnInit {
     fr.onload = (e: any) => {
       console.log("File", e);
       this.updateCompanyLogo(this.resizeBase64(fr.result, 200, 50));
-      //this.updateCompanyLogo(fr.result);
       this.originalBase64 = fr.result;
 
       console.log(this.originalBase64);
@@ -72,9 +71,8 @@ export class ResizerComponent implements OnInit {
 
     // Create original image
     var img = new Image();
-    img.src = base64;
-
-    // Determine new ratio based on max size
+    img.onload = function(){
+      // Determine new ratio based on max size
     var ratio = 1;
     if (img.height > maxHeight)
       ratio = maxHeight / img.height;
@@ -92,8 +90,8 @@ export class ResizerComponent implements OnInit {
     ctx.drawImage(canvasCopy, 0, 0, canvasCopy.width, canvasCopy.height, 0, 0, canvas.width, canvas.height);
 
     return canvas.toDataURL();
-
-
+    };
+    img.src = base64;
 
   }
 
