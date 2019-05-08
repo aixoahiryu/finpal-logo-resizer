@@ -10,12 +10,14 @@ export class ResizerComponent implements OnInit {
   logoFileImage: File;
   companyResource: CompanyResource = new CompanyResource();
   originalBase64: any;
+  resizedBase64: any;
 
   handleUploadImage(input) {
     let fr = new FileReader();
     fr.readAsDataURL(input.target.files[0]);
     fr.onload = (e: any) => {
       console.log("File", e);
+      
       this.updateCompanyLogo(this.resizeBase64(fr.result, 200, 50));
       this.originalBase64 = fr.result;
 
@@ -68,31 +70,30 @@ export class ResizerComponent implements OnInit {
     var ctx = canvas.getContext("2d");
     var canvasCopy = document.createElement("canvas");
     var copyContext = canvasCopy.getContext("2d");
+    var imgData: string;
 
     // Create original image
     var img = new Image();
     img.onload = function(){
-      // Determine new ratio based on max size
-    var ratio = 1;
-    if (img.height > maxHeight)
-      ratio = maxHeight / img.height;
-    else if (img.width > maxWidth)
-      ratio = maxWidth / img.width;
-
-    // Draw original image in second canvas
-    canvasCopy.width = img.width;
-    canvasCopy.height = img.height;
-    copyContext.drawImage(img, 0, 0);
-
-    // Copy and resize second canvas to first canvas
-    canvas.width = img.width * ratio;
-    canvas.height = img.height * ratio;
-    ctx.drawImage(canvasCopy, 0, 0, canvasCopy.width, canvasCopy.height, 0, 0, canvas.width, canvas.height);
-
-    return canvas.toDataURL();
+      
+      
     };
     img.src = base64;
 
+    // Determine new ratio based on max size
+    var ratio = 1;
+      if (img.height > maxHeight)
+        ratio = maxHeight / img.height;
+      else if (img.width > maxWidth)
+        ratio = maxWidth / img.width;
+
+      // Copy and resize second canvas to first canvas
+      canvas.width = img.width * ratio;
+      canvas.height = img.height * ratio;
+      ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0, canvas.width, canvas.height);
+
+      imgData = canvas.toDataURL();
+      return canvas.toDataURL();
   }
 
   //===========================================================================
