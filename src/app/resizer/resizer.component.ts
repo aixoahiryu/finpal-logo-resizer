@@ -9,14 +9,17 @@ export class ResizerComponent implements OnInit {
   ngOnInit() { }
   logoFileImage: File;
   companyResource: CompanyResource = new CompanyResource();
+  resizedImage: string;
 
   handleUploadImage(input) {
     let fr = new FileReader();
     fr.readAsDataURL(input.target.files[0]);
     fr.onload = (e: any) => {
-      this.updateCompanyLogo(this.resizeBase64(fr.result));
+      this.resizeBase64(fr.result);
+      
       console.log(input.target.files[0]);
       console.log(this.companyResource.companyLogoPath);
+      
       // Crop image section
       //===============================================================================================
       // let image = new Image();
@@ -56,33 +59,37 @@ export class ResizerComponent implements OnInit {
 
     // Max size for thumbnail
     const maxHeight = 50;
+    const self = this;
 
     // Create and initialize two canvas
     var canvas = document.createElement("canvas");
     var ctx = canvas.getContext("2d");
-    var canvasCopy = document.createElement("canvas");
-    var copyContext = canvasCopy.getContext("2d");
 
     // Create original image
     var img = new Image();
-    img.src = base64;
-
-    // Determine new ratio based on max size
-    var ratio = 1;
-      if (img.height > maxHeight)
-        ratio = maxHeight / img.height;
+    img.onload = (() => {
+      // Determine new ratio based on max size
+      var ratio = 1;
+        if (img.height > maxHeight)
+          ratio = maxHeight / img.height;
 
       // Copy and resize second canvas to first canvas
       canvas.width = img.width * ratio;
       canvas.height = img.height * ratio;
       ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0, canvas.width, canvas.height);
 
-      return canvas.toDataURL();
+      self.updateCompanyLogo(canvas.toDataURL());
+    })
+    img.src = base64;
+
+    
   }
+
+
 
   //===========================================================================
 
-  private updateCompanyLogo(input) {
+  updateCompanyLogo(input) {
     this.companyResource.companyLogoPath = input;
   }
 
