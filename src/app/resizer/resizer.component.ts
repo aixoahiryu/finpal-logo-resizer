@@ -87,16 +87,12 @@ export class ResizerComponent implements OnInit {
     
   }
 
-  handleFileEvent(input)  {
-    let fr = new FileReader();
-    fr.readAsDataURL(input.target.files[0]);
-    fr.onload = (e: any) => {
-      var img2 = new Image();
+  handleFileEvent(img64)  {
+        var img2 = new Image();
         img2.setAttribute('display','block');
         img2.setAttribute('top','10px');
-        img2.src = fr.result as string;
+        img2.src = img64;
         document.body.appendChild(img2);
-    }
   }
 
 
