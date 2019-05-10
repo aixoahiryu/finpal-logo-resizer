@@ -88,11 +88,10 @@ export class ResizerComponent implements OnInit {
   }
 
   handleFileEvent(img64)  {
-        var img2 = new Image();
-        img2.setAttribute('display','block');
-        img2.setAttribute('top','10px');
-        img2.src = img64;
-        document.body.appendChild(img2);
+        var img = new Image()
+        img = document.querySelector('#logoImage');
+        img.src = img64;
+        console.log(img64);
   }
 
 

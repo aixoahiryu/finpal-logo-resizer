@@ -36,7 +36,6 @@ export class AutoResizeDirective {
         ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0, canvas.width, canvas.height);
 
         var img64 = canvas.toDataURL();
-        //self.proceedEvent(AdminInfoEvent.UPLOAD_LOGO, self.convertBase64ToFile(img64, self.createRandomString()));
         this.autoResize.emit(img64);
       }
       img.src = base64 as string;
