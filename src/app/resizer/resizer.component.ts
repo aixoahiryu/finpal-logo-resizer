@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output } from "@angular/core";
 
+
 @Component({
   selector: "app-resizer",
   templateUrl: "./resizer.component.html",
@@ -11,6 +12,7 @@ export class ResizerComponent implements OnInit {
   companyResource: CompanyResource = new CompanyResource();
   resizedImage: string;
 
+  //(change)="handleUploadImage($event)"
   handleUploadImage(input) {
     let fr = new FileReader();
     fr.readAsDataURL(input.target.files[0]);
@@ -83,6 +85,18 @@ export class ResizerComponent implements OnInit {
     img.src = base64;
 
     
+  }
+
+  handleFileEvent(input)  {
+    let fr = new FileReader();
+    fr.readAsDataURL(input.target.files[0]);
+    fr.onload = (e: any) => {
+      var img2 = new Image();
+        img2.setAttribute('display','block');
+        img2.setAttribute('top','10px');
+        img2.src = fr.result as string;
+        document.body.appendChild(img2);
+    }
   }
 
 
